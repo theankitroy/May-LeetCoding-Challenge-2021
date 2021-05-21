@@ -1,0 +1,46 @@
+class Solution {
+    public int superpalindromesInRange(String left, String right) {
+        ArrayList<Long> palindromeNo=new ArrayList<>();
+        long leftPart=Long.parseLong(left);
+        long rightPart=Long.parseLong(right);
+        int count=0;
+         for(long i=0;i<10;i++){
+             palindromeNo.add(i);
+             
+         }
+        for(long i=1;i<10000;i++){
+            String leftNo=Long.toString(i);
+            String rightNo=new StringBuilder(leftNo).reverse().toString();
+            palindromeNo.add(Long.parseLong(leftNo+rightNo));
+            
+            for(long digit=0;digit<10;digit++){
+                
+                palindromeNo.add(Long.parseLong(leftNo+digit+rightNo));
+            }
+            
+        }
+        
+        for(long no:palindromeNo){
+            long square=no*no;
+            
+            if(leftPart<=square && rightPart>=square && isPalindrome(Long.toString(square))){
+                count++;
+            }
+        } 
+        return count;      
+    }
+    
+    private boolean isPalindrome(String square){
+        int start=0;
+        int end=square.length()-1;
+        while(start<end){
+            if(square.charAt(start)!=square.charAt(end))
+                return false;
+            else{
+                start++;
+                end--;
+            }
+        }
+        return true;
+    }
+}

@@ -1,0 +1,25 @@
+class Solution {
+    public List<String> ambiguousCoordinates(String S) {
+        List<String> ans = new ArrayList<>();
+        for (int i = 2; i < S.length() - 1; i++) {
+            String xStr = S.substring(1,i), yStr = S.substring(i, S.length() - 1);
+            List<String> xPoss = new ArrayList<>();
+            for (int j = 0; j < xStr.length(); j++)
+                if (isValid(xStr, j))
+                    xPoss.add(xStr.substring(0,j) + (j > 0 ? "." : "") + xStr.substring(j));
+            for (int j = 0; j < yStr.length(); j++)
+                if (isValid(yStr, j)) {
+                    String y = yStr.substring(0,j) + (j > 0 ? "." : "") + yStr.substring(j);
+                    for (String x : xPoss)
+                        ans.add("(" + x + ", " + y + ")");
+                }
+        }
+        return ans;
+    }
+    
+    public boolean isValid(String str, int dec) {
+        if (dec != 0 && str.charAt(str.length()-1) == '0') return false;
+        if (str.length() != 1 && dec != 1 && str.charAt(0) == '0') return false;
+        return true;
+    }
+}
