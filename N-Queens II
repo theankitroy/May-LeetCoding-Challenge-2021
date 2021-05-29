@@ -1,0 +1,37 @@
+class Solution {
+    Set<Integer> usedCol=new HashSet<>();
+        Set<Integer> used135=new HashSet<>();
+        Set<Integer> used45=new HashSet<>();
+    int count=0;
+        
+    public int totalNQueens(int n) {
+        helper(n,0);
+        return count;
+       
+    }
+    public void helper(int n,int row){
+        if(row==n){
+            count++;
+            return ;
+        }
+        else{
+            for(int col=0;col<n;col++){
+                if(isSafe(row,col)){
+                    usedCol.add(col);
+                    used135.add(col-row);
+                    used45.add(col+row);
+                    helper(n,row+1);
+                    usedCol.remove(col);
+                    used135.remove(col-row);
+                    used45.remove(col+row);
+                }
+            }
+        }
+    }
+    private boolean isSafe(int row,int col){
+        if(usedCol.contains(col)|| used135.contains(col-row)|| used45.contains(col+row)){
+            return false;
+        }
+        else return true;
+    }
+}
